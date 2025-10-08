@@ -27,6 +27,14 @@ app.get('/post', (req, res) => {
     res.render("post.ejs", { post: null, editMode: false });
 });
 
+app.get('/signin', (req, res) => {
+    res.render("signin.ejs");
+});
+
+app.get('/signup', (req, res) => {
+    res.render("signup.ejs");
+});
+
 app.get("/edit/:id", (req, res) => {
     const { id } = req.params;
     const post = posts[id];
