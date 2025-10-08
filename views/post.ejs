@@ -1,0 +1,63 @@
+<%- include("partials/header.ejs") %>
+
+<h1><%= editMode ? "Edit Post" : "Create a Post" %></h1>
+
+<form 
+  action="<%= editMode ? `/posts/${post.id}` : '/submit' %>" 
+  method="POST" 
+  class="post-form"
+  <% if (editMode) { %>
+    id="edit-form" data-post-id="<%= post.id %>"
+  <% } %>
+>
+    <div class="form-bar">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="<%= post ? post.name : '' %>" required>
+    </div>
+
+    <div class="form-bar">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="<%= post ? post.title : '' %>" required>
+    </div>
+
+    <div class="form-bar content-bar">
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content" rows="8" required><%= post ? post.content : '' %></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn"><%= editMode ? "Update Post" : "Submit Post" %></button>
+</form>
+</main>
+
+<%- include("partials/footer.ejs") %>
+
+<% if (editMode) { %>
+<script>
+
+async function submitEdit(id) {
+    const updates = {
+        name: document.getElementById('name').value,
+        title: document.getElementById('title').value,
+        content: document.getElementById('content').value
+    };
+
+    fetch(`/posts/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates)
+    });
+
+    window.location.href = "/";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.getElementById('edit-form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); 
+        const postId = form.dataset.postId;
+        submitEdit(postId);
+    });
+});
+</script>
+<% } %>

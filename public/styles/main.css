@@ -1,0 +1,160 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.topbar {
+    background-color: #89CFF0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-start;
+    padding: 12px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 15px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.topbar a:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+.content {
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.post {
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+.post-header {
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.post-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.post-header small {
+    color: #555555;
+}
+
+.post-content p {
+    font-size:16px;
+}
+
+.post-content small {
+    color: #555;
+    font-size: 10px;
+}
+
+.post-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.post-buttons button {
+    margin-left: 5px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #708090; 
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.post-buttons button:hover {
+    background-color: #89CFF0;
+}
+
+.no-posts {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    font-size: 24px;
+    color: #555555;
+}
+
+.footer {
+    background-color: #89CFF0;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.post-form {
+    max-width: 80%;
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-bar {
+    background-color: #708090; 
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.form-bar label {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.form-bar input,
+.content-bar textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.content-bar {
+    flex-grow: 1;
+}
+
+.submit-btn {
+    background-color: #708090; 
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: auto;   
+    align-self: center; 
+}
+
+.submit-btn:hover {
+    background-color: #57b0e0;
+}

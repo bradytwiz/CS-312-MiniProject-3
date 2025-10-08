@@ -1,0 +1,38 @@
+<%- include("partials/header.ejs") %>
+
+<div class="content">
+    <% if (sortedPosts.length === 0) { %>
+        <div class="no-posts">
+            <p>No posts yet, start Posting!</p>
+        </div>
+    <% } else { %>
+        <% sortedPosts.forEach(post => { %> 
+            <div class="post" id="post-<%= post.id %>">
+                <div class="post-buttons">
+                    <button onclick="editPost('<%= post.id %>')">Edit</button>
+                    <button onclick="deletePost('<%= post.id %>')">Delete</button>
+                </div>
+                <div class="post-header">
+                    <h2><%= post.title %></h2>
+                    <small>Posted By <%= post.name %></small>
+                </div>
+                <div class="post-content">
+                    <p><%= post.content %></p>
+                    <small>Posted <%= post.timestamp %></small>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</div>
+</main>
+<script>
+    function editPost(id) {
+        window.location.href = `/edit/${id}`;
+    }
+
+    function deletePost(id) {
+        fetch(`/posts/${id}`, { method: "DELETE" });
+        document.getElementById(`post-${id}`)?.remove();
+    }
+</script>
+<%- include("partials/footer.ejs") %>
