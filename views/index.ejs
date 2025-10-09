@@ -32,7 +32,7 @@
 
     function deletePost(id) {
         fetch(`/posts/${id}`, { method: "DELETE" });
-        document.getElementById(`post-${id}`)?.remove();
+        window.location.reload();
     }
 </script>
 <%- include("partials/footer.ejs") %>
