@@ -10,10 +10,7 @@
     id="edit-form" data-post-id="<%= post.id %>"
   <% } %>
 >
-    <div class="form-bar">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value="<%= post ? post.name : '' %>" required>
-    </div>
+
 
     <div class="form-bar">
         <label for="title">Title:</label><br>
@@ -24,6 +21,9 @@
         <label for="content">Content:</label><br>
         <textarea id="content" name="content" rows="8" required><%= post ? post.content : '' %></textarea>
     </div>
+    <% if (locals.error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
 
     <button type="submit" class="submit-btn"><%= editMode ? "Update Post" : "Submit Post" %></button>
 </form>

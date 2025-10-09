@@ -2,6 +2,19 @@ import express from "express";
 import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import pg from "pg";
+
+const db = new pg.Client({
+  user: "postgres",
+  host: "localhost",
+  database: "blog",
+  password: "password",
+  port: 5432,
+});
+db.connect();
+
+let currentUser_id = null;
+let currentName = null;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -42,11 +55,13 @@ app.get("/edit/:id", (req, res) => {
     res.render("post.ejs", { post, editMode: true });
 });
 
-app.post("/submit", (req, res) => {
-    const {name, title, content} = req.body;
+app.post("/submit", async (req, res) => {
+    const {title, content} = req.body;
+
+
     posts[runningId] = {
         id: runningId,
-        name,
+        currentName,
         title,
         content,
         timestamp: new Date()
@@ -55,15 +70,55 @@ app.post("/submit", (req, res) => {
     res.redirect("/");
 });
 
-app.post("/signup", (req, res) => {
-    const {username, password, fname} = req.body;
-    console.log(username + password + fname)
-    res.redirect("/signin")
+app.post("/signup", async (req, res) => {
+    const {user_id, password, name} = req.body;
+
+    try {
+        console.log('hello1');
+        await db.query(
+            `INSERT INTO users (user_id, password, name)
+            VALUES ($1, $2, $3)`,
+            [user_id, password, name]
+            
+        );
+        console.log('hello2');
+        res.redirect("/signin")
+    } catch (err) {
+        console.error(err);
+        res.render('signup.ejs', { error: 'That username is already taken. Please try again.' });
+    }
+    
 });
 
-app.post("/signin", (req, res) => {
-    const {username, password} = req.body;
-    console.log(username + password);
+app.post("/signin", async (req, res) => {
+    const {user_id, password} = req.body;
+
+    try {
+        const result = await db.query(
+            `SELECT * FROM users WHERE user_id = $1`,
+            [user_id] 
+        );
+
+        if (result.rows.length === 0) {
+            res.render('signin', {error: 'Username not found.'});
+            return;
+        }
+        if (result.rows[0].password != password) {
+            res.render('signin', {error: 'Incorrect Password'});
+            return;
+        } 
+
+        // at this point they are validated
+        currentUser_id = result.rows[0].user_id;
+        currentName = result.rows[0].name;
+        console.log(
+            'Signed in as ' + currentUser_id
+        );
+
+    } catch (err) {
+        res.render('signin', { error: 'Something went wrong, please try again.' });
+    }
+    
     res.redirect("/")
 });
 

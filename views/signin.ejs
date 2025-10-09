@@ -5,14 +5,17 @@
 
 <form method="POST" class="post-form" action="/signin">
     <div class="form-bar">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" value="" required>
+        <label for="user_id">Username:</label><br>
+        <input type="text" id="user_id" name="user_id" value="" required>
     </div>
 
     <div class="form-bar">
         <label for="password">Password:</label><br>
-        <input type="text" id="password" name="password" value="" required>
+        <input type="password" id="password" name="password" value="" required>
     </div>
+    <% if (locals.error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
 
     <button type="submit" class="submit-btn">Sign In</button>
 </form>
