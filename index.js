@@ -58,6 +58,19 @@ app.get("/edit/:id", (req, res) => {
 app.post("/submit", async (req, res) => {
     const {title, content} = req.body;
 
+    try {
+        if (currentUser_id == null) {
+            res.render('/posts', { error: 'Please Log In Before Posting' });
+        }
+        await db.query(
+            `INSERT INTO blogs (creator_name, creator_user_id, title, body)
+            VALUES ($1, $2, $3, $4)`
+            [currentName, currentUser_id, title, content]
+        );
+    } catch (error) {
+        console.error(err);
+        res.render('signup.ejs', { error: 'Something went wrong. Please try again.' });
+    }
 
     posts[runningId] = {
         id: runningId,
