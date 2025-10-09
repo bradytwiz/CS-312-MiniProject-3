@@ -43,7 +43,7 @@ app.get("/edit/:id", (req, res) => {
 });
 
 app.post("/submit", (req, res) => {
-    const {name, title, content} = req.body
+    const {name, title, content} = req.body;
     posts[runningId] = {
         id: runningId,
         name,
@@ -53,6 +53,18 @@ app.post("/submit", (req, res) => {
     };
     runningId++;
     res.redirect("/");
+});
+
+app.post("/signup", (req, res) => {
+    const {username, password, fname} = req.body;
+    console.log(username + password + fname)
+    res.redirect("/signin")
+});
+
+app.post("/signin", (req, res) => {
+    const {username, password} = req.body;
+    console.log(username + password);
+    res.redirect("/")
 });
 
 app.delete("/posts/:id", (req, res) => {
