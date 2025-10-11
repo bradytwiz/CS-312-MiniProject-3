@@ -40,8 +40,6 @@ async function submitEdit(id) {
         content: document.getElementById('content').value
     };
 
-    console.log('am i dying in here?')
-
     fetch(`/posts/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
